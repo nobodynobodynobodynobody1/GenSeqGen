@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Genetic Sequence Generator</title>
+    <style>
+        body {
+            font-family: Monospace, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: black;
+};
+        }
+        div {
+            background: linear-gradient(to top right, #000000 0%, #ffffff 100%);
+        }
+        div {
+            background: linear-gradient(to bottom, #ff99cc 0%, #ffffcc 99%);
+        }
+        .container {
+            text-align: center;
+            background: background-color: linear-gradient(to bottom, #ffcc99 0%, #66ffcc 100%);;
+            padding: 20px;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 0 20px white;
+        }
+
+        input, button, textarea {
+            font-family: Monospace, sans-serif;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 90%;
+            align-items: center;
+            background: pastel blue;
+        }
+        button {
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: pastel blue;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Random Genetic Sequence Generator</h1>
+    <label for="sequenceLength">Enter sequence length:</label>
+    <input type="number" id="sequenceLength" placeholder="e.g., 10000">
+    <button id="generateBtn">Generate Sequence</button>
+    <button id="generatecomplementandreverse">Reverse Complement</button>
+    <textarea id="output" rows="4" readonly></textarea>
+</div>
+<script>
+        const outputElement = document.getElementById('output');
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const sequenceLength = parseInt(document.getElementById('sequenceLength').value);
+
+
+            if (isNaN(sequenceLength) || sequenceLength <= 0) {
+                outputElement.value = 'Please enter a valid positive number for the sequence length.';
+                return;
+            }
+
+            const bases = ['A', 'T', 'C', 'G'];
+            let randomSequence = '';
+
+            for (let i = 0; i < sequenceLength; i++) {
+                const randomIndex = Math.floor(Math.random() * bases.length);
+                randomSequence += bases[randomIndex];
+            }
+
+            outputElement.value = randomSequence;
+        });
+        document.getElementById('generatecomplementandreverse').addEventListener('click', function() {
+        outputElement.value = getReverseComplement(outputElement.value)
+        })
+
+        //Function to get reverse complement of a DNA sequence
+        function getReverseComplement(sequence) {
+            const complement = {
+                'A' : 'T',
+                'T' : 'A',
+                'C' : 'G',
+                'G' : 'C',
+            };
+
+            let reverseComplement = '';
+            for (let i = sequence.length - 1; i >= 0; i--) {
+                reverseComplement += complement[sequence[i]];
+            }
+            return reverseComplement;
+        }
+        //Example usage:
+        const sequenceLength = 20;
+        const randomSequence = generateRandomSequence(sequenceLength);
+        const reverseComplement = getReverseComplement(randomSequence);
+
+        console.log('Generated Sequence:', randomSequence);
+        console.log('Reverse Complement:', reverseComplement);
+    </script>
+</body>
+</html>
